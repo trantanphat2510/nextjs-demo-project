@@ -9,9 +9,8 @@ import { StoreProvider } from "../src/presentation/providers/store-provider"
 import "./globals.css"
 
 export const metadata: Metadata = {
-  title: "ShopDemo - Modern Ecommerce",
-  description: "A modern ecommerce demo built with Next.js, Clean Architecture, and Zustand",
-  generator: "v0.app",
+  title: "Shop Demo",
+  description: "Shop Demo",
 }
 
 export default function RootLayout({

@@ -1,6 +1,7 @@
 "use client"
 
 import type React from "react"
+import Image from "next/image"
 import { Card, Rate, Button, Badge } from "antd"
 import { ShoppingCartOutlined, EyeOutlined } from "@ant-design/icons"
 import type { Product } from "../../domain/entities/product.entity"
@@ -13,7 +14,11 @@ interface ProductCardProps {
   onViewDetails: (product: Product) => void
 }
 
-export const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart, onViewDetails }) => {
+export const ProductCard: React.FC<ProductCardProps> = ({
+  product,
+  onAddToCart,
+  onViewDetails,
+}) => {
   const isLowStock = product.stock < 10
 
   return (
@@ -22,12 +27,20 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart, 
       className="h-full flex flex-col shadow-md hover:shadow-lg transition-shadow duration-300"
       cover={
         <div className="relative overflow-hidden h-48">
-          <img
+          <Image
             alt={product.name}
             src={product.imageUrl || "/placeholder.svg"}
-            className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+            fill
+            style={{ objectFit: "cover" }}
+            className="transition-transform duration-300 hover:scale-105"
           />
-          {isLowStock && <Badge.Ribbon text="Low Stock" color="red" className="absolute top-2 right-2" />}
+          {isLowStock && (
+            <Badge.Ribbon
+              text="Low Stock"
+              color="red"
+              className="absolute top-2 right-2"
+            />
+          )}
         </div>
       }
       actions={[
@@ -54,22 +67,45 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onAddToCart, 
     >
       <div className="flex flex-col h-full">
         <Meta
-          title={<h3 className="text-lg font-semibold text-foreground line-clamp-2 mb-2">{product.name}</h3>}
-          description={<p className="text-muted-foreground text-sm line-clamp-2 mb-3">{product.description}</p>}
+          title={
+            <h3 className="text-lg font-semibold text-foreground line-clamp-2 mb-2">
+              {product.name}
+            </h3>
+          }
+          description={
+            <p className="text-muted-foreground text-sm line-clamp-2 mb-3">
+              {product.description}
+            </p>
+          }
         />
 
         <div className="mt-auto space-y-2">
           <div className="flex items-center justify-between">
-            <span className="text-2xl font-bold text-primary">${product.price.toFixed(2)}</span>
-            <span className="text-sm text-muted-foreground">Stock: {product.stock}</span>
+            <span className="text-2xl font-bold text-primary">
+              ${product.price.toFixed(2)}
+            </span>
+            <span className="text-sm text-muted-foreground">
+              Stock: {product.stock}
+            </span>
           </div>
 
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-1">
-              <Rate disabled defaultValue={product.rating} allowHalf className="text-sm" />
-              <span className="text-sm text-muted-foreground">({product.reviews})</span>
+              <Rate
+                disabled
+                defaultValue={product.rating}
+                allowHalf
+                className="text-sm"
+              />
+              <span className="text-sm text-muted-foreground">
+                ({product.reviews})
+              </span>
             </div>
-            <Badge count={product.category} style={{ backgroundColor: "#10b981" }} className="text-xs" />
+            <Badge
+              count={product.category}
+              style={{ backgroundColor: "#10b981" }}
+              className="text-xs"
+            />
           </div>
         </div>
       </div>
